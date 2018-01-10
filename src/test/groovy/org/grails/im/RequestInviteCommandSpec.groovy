@@ -1,19 +1,25 @@
 package org.grails.im
 
-import grails.testing.gorm.DomainUnitTest
+import spock.lang.Shared
 import spock.lang.Specification
+import spock.lang.Subject
 import spock.lang.Unroll
 
-class CommunityUserGormEntitySpec extends Specification implements DomainUnitTest<CommunityUserGormEntity> {
+class RequestInviteCommandSpec extends Specification {
+
+    @Subject
+    @Shared
+    RequestInviteCommand cmd = new RequestInviteCommand()
+
 
     @Unroll
     void "email '#value' #description"(String value, boolean expected, String expectedErrorCode, String description) {
         when:
-        domain.id = value
+        cmd.email = value
 
         then:
-        expected == domain.validate(['id'])
-        domain.errors['id']?.code == expectedErrorCode
+        expected == cmd.validate(['email'])
+        cmd.errors['email']?.code == expectedErrorCode
 
         where:
         value                  | expected | expectedErrorCode
@@ -28,11 +34,11 @@ class CommunityUserGormEntitySpec extends Specification implements DomainUnitTes
     @Unroll
     void "about '#value' #description"(String value, boolean expected, String expectedErrorCode, String description) {
         when:
-        domain.about = value
+        cmd.about = value
 
         then:
-        expected == domain.validate(['about'])
-        domain.errors['about']?.code == expectedErrorCode
+        expected == cmd.validate(['about'])
+        cmd.errors['about']?.code == expectedErrorCode
 
         where:
         value                  | expected | expectedErrorCode
@@ -40,5 +46,18 @@ class CommunityUserGormEntitySpec extends Specification implements DomainUnitTes
         ''                     |  false   | 'blank'
         'I am OK'              |  true    | null
         description = expected ? 'is not valid' : 'is valid'
+    }
+
+    void "as RequestInvite"() {
+        given:
+        RequestInviteCommand cmd = new RequestInviteCommand(email: 'email@address.com', about: 'I am OK')
+
+        when:
+        RequestInvite requestInvite = cmd as RequestInvite
+
+        then:
+        requestInvite
+        requestInvite.email == 'email@address.com'
+        requestInvite.about == 'I am OK'
     }
 }

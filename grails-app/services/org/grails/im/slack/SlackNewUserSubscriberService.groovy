@@ -1,4 +1,4 @@
-package org.grails.im
+package org.grails.im.slack
 
 import grails.config.Config
 import grails.core.support.GrailsConfigurationAware
