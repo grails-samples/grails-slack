@@ -1,4 +1,4 @@
-package grails.slack
+package org.grails.im
 
 class UrlMappings {
 
