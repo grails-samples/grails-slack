@@ -5,6 +5,7 @@ import grails.core.support.GrailsConfigurationAware
 import grails.events.annotation.Subscriber
 import grails.plugins.rest.client.RestBuilder
 import grails.plugins.rest.client.RestResponse
+import grails.web.mapping.LinkGenerator
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import org.grails.im.GrailsImEvents
@@ -19,24 +20,25 @@ class SlackService implements GrailsConfigurationAware {
     String apiUrl
     String token
     String channel
-    String callbackUrl
 
+    LinkGenerator grailsLinkGenerator
     @Override
     void setConfiguration(Config co) {
         apiUrl = co.getProperty('slack.apiUrl', String)
         token = co.getProperty('slack.token', String)
         channel = co.getProperty('slack.channel', String)
-        callbackUrl = co.getProperty('slack.callbackUrl', String)
     }
 
-//    @Subscriber(GrailsImEvents.NEW_USER)
-    @Subscriber('newUser')
+    @Subscriber(GrailsImEvents.NEW_USER)
     void onNewUser(RequestInvite requestInvite) {
         send(requestInvite)
     }
 
     @CompileDynamic
     void send(RequestInvite requestInvite) {
+        String callbackUrl = grailsLinkGenerator.link(controller: 'apiSlack', action: 'index')
+        log.debug 'callback url: {}', callbackUrl
+
         String url = "${apiUrl}/chat.postMessage?token={token}&channel={channel}&text={text}&attachments={attachments}"
         String attachments = """
 [{

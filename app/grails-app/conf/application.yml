@@ -92,9 +92,6 @@ slack:
   callbackUrl: '${SLACK_CALLBACK_URL}'
 ---
 environments:
-    development:
-        grails:
-            serverURL: http://localhost:8080
     test:
         grails:
             serverURL: http://localhost:8080
