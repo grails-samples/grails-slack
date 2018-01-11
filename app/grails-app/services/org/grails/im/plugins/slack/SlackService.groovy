@@ -22,11 +22,16 @@ class SlackService implements GrailsConfigurationAware {
     String channel
 
     LinkGenerator grailsLinkGenerator
+
     @Override
     void setConfiguration(Config co) {
         apiUrl = co.getProperty('slack.apiUrl', String)
         token = co.getProperty('slack.token', String)
         channel = co.getProperty('slack.channel', String)
+    }
+
+    boolean isSlackConfiguredCorrectly() {
+        token && channel
     }
 
     @Subscriber(GrailsImEvents.NEW_USER)
@@ -36,11 +41,14 @@ class SlackService implements GrailsConfigurationAware {
 
     @CompileDynamic
     void send(RequestInvite requestInvite) {
-        String callbackUrl = grailsLinkGenerator.link(controller: 'apiSlack', action: 'index')
-        log.debug 'callback url: {}', callbackUrl
+        if ( isSlackConfiguredCorrectly() ) {
 
-        String url = "${apiUrl}/chat.postMessage?token={token}&channel={channel}&text={text}&attachments={attachments}"
-        String attachments = """
+
+            String callbackUrl = grailsLinkGenerator.link(controller: 'apiSlack', action: 'index')
+            log.debug 'callback url: {}', callbackUrl
+
+            String url = "${apiUrl}/chat.postMessage?token={token}&channel={channel}&text={text}&attachments={attachments}"
+            String attachments = """
 [{
     "fallback": "You can not approve users",
     "callback_id": "approver",
@@ -65,22 +73,24 @@ class SlackService implements GrailsConfigurationAware {
     ]
 }]
 """
+            String text = message(requestInvite)
 
-        String text = message(requestInvite)
+            Map<String, String> params = [
+                    token      : token,
+                    channel    : channel,
+                    text       : text,
+                    attachments: attachments,
+            ]
 
-        Map<String, String> params = [
-                token      : token,
-                channel    : channel,
-                text       : text,
-                attachments: attachments,
-        ]
+            RestResponse response = new RestBuilder().get(url) {
+                urlVariables params
+            }
 
-        RestResponse response = new RestBuilder().get(url) {
-            urlVariables params
-        }
-
-        if (!response.json.ok) {
-            log.error "There was an error posting to the slack channel Approve/Reject buttons: ${response.json.error}"
+            if (!response.json.ok) {
+                log.error "There was an error posting to the slack channel Approve/Reject buttons: ${response.json.error}"
+            }
+        } else {
+            log.debug 'Slack is not configured correctly. Missing token or channel'
         }
     }
 
@@ -90,19 +100,25 @@ class SlackService implements GrailsConfigurationAware {
 
     @CompileDynamic
     void invite(String email) {
-        String url = "${apiUrl}/users.admin.invite?token={token}&channel={channel}&email={email}"
-        Map<String, Object> params = [token: token,
-                                      channel: channel,
-                                      email: email
-        ] as Map<String, Object>
 
-        RestResponse response = new RestBuilder().get(url) {
-            urlVariables params
+        if ( isSlackConfiguredCorrectly() ) {
+            String url = "${apiUrl}/users.admin.invite?token={token}&channel={channel}&email={email}"
+            Map<String, Object> params = [token: token,
+                                          channel: channel,
+                                          email: email
+            ] as Map<String, Object>
+
+            RestResponse response = new RestBuilder().get(url) {
+                urlVariables params
+            }
+
+            if (!response.json.ok) {
+                log.error "There was an error inviting the user: ${response.json.error}"
+            }
+        } else {
+            log.debug 'Slack is not configured correctly. Missing token or channel'
         }
 
-        if (!response.json.ok) {
-            log.error "There was an error inviting the user: ${response.json.error}"
-        }
     }
 
     @Subscriber(GrailsImEvents.APPROVED_USER)
