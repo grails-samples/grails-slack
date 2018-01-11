@@ -19,5 +19,4 @@ cfConfig {
     //Env and services
     buildpack = "https://github.com/cloudfoundry/java-buildpack.git"
     environment = [:]
-    services  = ["grails-slack-db"]
 }
