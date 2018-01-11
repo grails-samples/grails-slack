@@ -3,7 +3,7 @@ set -e
 
 export EXIT_STATUS=0
 
-./gradlew check || EXIT_STATUS=$?
+./gradlew app:check || EXIT_STATUS=$?
 
 echo "Tag: $TRAVIS_TAG"
 
@@ -15,10 +15,10 @@ if [[ $EXIT_STATUS ]]; then
 
             echo "Publishing to PWS"
 
-            ./gradlew assemble || EXIT_STATUS=$?
+            ./gradlew app:assemble || EXIT_STATUS=$?
 
             if [[ $EXIT_STATUS ]]; then
-                ./gradlew cf-push || EXIT_STATUS=$i
+                ./gradlew app:cf-push || EXIT_STATUS=$i
             fi
         fi
     fi
