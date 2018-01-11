@@ -8,7 +8,6 @@ import org.grails.im.entities.RequestInvite
 class RequestInvitePublisherService implements EventPublisher {
 
     void publishEvent(RequestInvite requestInvite) {
-//        notify(GrailsImEvents.NEW_USER, requestInvite)
-        notify('newUser', requestInvite)
+        notify(GrailsImEvents.NEW_USER, requestInvite)
     }
 }
