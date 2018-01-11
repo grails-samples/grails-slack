@@ -1,0 +1,23 @@
+apply plugin: 'cf-app'
+
+cfConfig {
+    //CF Details
+    ccHost = 'api.run.pivotal.io'
+    ccUser = System.getenv('CLOUDFOUNDRY_USER') ?: project.cloudFoundryUser
+    ccPassword = System.getenv('CLOUDFOUNDRY_PASSWORD') ?: project.cloudFoundryPassword
+    org = "grails-org"
+    space = "slack"
+
+    //App Details
+    name = "grails-slack"
+    host = "grails-slack"
+    filePath = "build/libs/grails-slack-${version}.war"
+    //domain = "https://grailsslack.cfapps.io/"
+    instances = 1
+    memory = 2048
+
+    //Env and services
+    buildpack = "https://github.com/cloudfoundry/java-buildpack.git"
+    environment = [:]
+    services  = ["grails-slack-db"]
+}

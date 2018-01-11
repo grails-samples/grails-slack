@@ -9,6 +9,7 @@ buildscript {
         classpath "gradle.plugin.com.energizedwork.webdriver-binaries:webdriver-binaries-gradle-plugin:1.1"
         classpath "gradle.plugin.com.energizedwork:idea-gradle-plugins:1.4"
         classpath "org.grails.plugins:hibernate5:${gormVersion-".RELEASE"}"
+        classpath "com.github.pivotalservices:ya-cf-app-gradle-plugin:$cfAppVersion"
     }
 }
 
@@ -23,6 +24,7 @@ apply plugin:"asset-pipeline"
 apply plugin:"com.energizedwork.webdriver-binaries"
 apply plugin:"com.energizedwork.idea-project-components"
 apply plugin:"org.grails.grails-gsp"
+apply from: "${rootProject.projectDir}/gradle/cloudfoundry.gradle"
 
 repositories {
     mavenLocal()
@@ -63,11 +65,14 @@ dependencies {
     testRuntime "org.seleniumhq.selenium:selenium-firefox-driver:3.6.0"
     testRuntime "org.seleniumhq.selenium:selenium-remote-driver:3.6.0"
     testRuntime "org.seleniumhq.selenium:selenium-api:3.6.0"
+
+    runtime 'mysql:mysql-connector-java:5.1.40'
 }
 
 bootRun {
     jvmArgs('-Dspring.output.ansi.enabled=always')
     addResources = true
+    systemProperties System.properties
 }
 
 
