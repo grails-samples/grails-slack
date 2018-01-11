@@ -19,6 +19,7 @@ class SlackService implements GrailsConfigurationAware {
 
     String apiUrl
     String token
+    String legacyToken
     String channel
 
     LinkGenerator grailsLinkGenerator
@@ -27,6 +28,7 @@ class SlackService implements GrailsConfigurationAware {
     void setConfiguration(Config co) {
         apiUrl = co.getProperty('slack.apiUrl', String)
         token = co.getProperty('slack.token', String)
+        legacyToken = co.getProperty('slack.legacyToken', String)
         channel = co.getProperty('slack.channel', String)
     }
 
@@ -103,7 +105,7 @@ class SlackService implements GrailsConfigurationAware {
 
         if ( isSlackConfiguredCorrectly() ) {
             String url = "${apiUrl}/users.admin.invite?token={token}&channel={channel}&email={email}"
-            Map<String, Object> params = [token: token,
+            Map<String, Object> params = [token: legacyToken,
                                           channel: channel,
                                           email: email
             ] as Map<String, Object>
