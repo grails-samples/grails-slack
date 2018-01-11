@@ -4,9 +4,10 @@ import com.stehno.ersatz.ContentType
 import com.stehno.ersatz.Encoders
 import com.stehno.ersatz.ErsatzServer
 import grails.testing.services.ServiceUnitTest
+import org.grails.im.entities.UserApprovedImpl
 import spock.lang.Specification
 
-class SlackNewUserSubscriberServiceSpec extends Specification implements ServiceUnitTest<SlackNewUserSubscriberService> {
+class SlackInviteUserSubscriberServiceSpec extends Specification implements ServiceUnitTest<SlackInviteUserSubscriberService> {
 
     void 'invite a user'() {
         given: 'a mocked remote server'
@@ -25,7 +26,7 @@ class SlackNewUserSubscriberServiceSpec extends Specification implements Service
             service.apiUrl = ersatz.httpUrl
 
         when: 'inviting the user'
-            service.onNewUser(email, about)
+            service.onUserApproved(new UserApprovedImpl(email: email))
 
         then:
             ersatz.verify()
@@ -55,7 +56,7 @@ class SlackNewUserSubscriberServiceSpec extends Specification implements Service
             service.apiUrl = ersatz.httpUrl
 
         when: 'trying to invite the user'
-            service.onNewUser(email, about)
+            service.onUserApproved(new UserApprovedImpl(email: email))
 
         then:
             ersatz.verify()
