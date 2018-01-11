@@ -1,5 +1,6 @@
 package org.grails.im.plugins.slack
 
+import grails.web.mapping.LinkGenerator
 import com.stehno.ersatz.ContentType
 import com.stehno.ersatz.Encoders
 import com.stehno.ersatz.ErsatzServer
@@ -12,65 +13,66 @@ class SlackServiceSpec extends Specification implements ServiceUnitTest<SlackSer
 
     void 'invite a user'() {
         given: 'a mocked remote server'
-            ErsatzServer ersatz = new ErsatzServer()
-            ersatz.expectations {
-                get('/users.admin.invite') {
-                    query('email', email)
-                    called(1)
-                    responder {
-                        code(200)
-                        encoder(ContentType.APPLICATION_JSON, Map, Encoders.json)
-                        content([ok: true], ContentType.APPLICATION_JSON)
-                    }
+        ErsatzServer ersatz = new ErsatzServer()
+        ersatz.expectations {
+            get('/users.admin.invite') {
+                query('email', email)
+                called(1)
+                responder {
+                    code(200)
+                    encoder(ContentType.APPLICATION_JSON, Map, Encoders.json)
+                    content([ok: true], ContentType.APPLICATION_JSON)
                 }
             }
-            service.apiUrl = ersatz.httpUrl
+        }
+        service.apiUrl = ersatz.httpUrl
 
         when: 'inviting the user'
-            service.onUserApproved(new UserApprovedImpl(email: email))
+        service.onUserApproved(new UserApprovedImpl(email: email))
 
         then:
-            ersatz.verify()
+        ersatz.verify()
 
         cleanup:
-            ersatz.stop()
+        ersatz.stop()
 
         where:
-            email = 'john.doe@example.com'
+        email = 'john.doe@example.com'
     }
 
     void 'there was an error trying to invite a user'() {
         given: 'a mocked remote server'
-            ErsatzServer ersatz = new ErsatzServer()
-            ersatz.expectations {
-                get('/users.admin.invite') {
-                    query('email', email)
-                    called(1)
-                    responder {
-                        code(200)
-                        encoder(ContentType.APPLICATION_JSON, Map, Encoders.json)
-                        content([ok: false, error: 'error message'], ContentType.APPLICATION_JSON)
-                    }
+        ErsatzServer ersatz = new ErsatzServer()
+        ersatz.expectations {
+            get('/users.admin.invite') {
+                query('email', email)
+                called(1)
+                responder {
+                    code(200)
+                    encoder(ContentType.APPLICATION_JSON, Map, Encoders.json)
+                    content([ok: false, error: 'error message'], ContentType.APPLICATION_JSON)
                 }
             }
-            service.apiUrl = ersatz.httpUrl
+        }
+        service.apiUrl = ersatz.httpUrl
 
         when: 'trying to invite the user'
-            service.onUserApproved(new UserApprovedImpl(email: email))
+        service.onUserApproved(new UserApprovedImpl(email: email))
 
         then:
-            ersatz.verify()
+        ersatz.verify()
 
         cleanup:
-            ersatz.stop()
+        ersatz.stop()
 
         where:
-            email = 'john.doe@example.com'
+        email = 'john.doe@example.com'
     }
 
 
     void 'send request to slack'() {
         given: 'a mocked remote server'
+        service.grailsLinkGenerator = Mock(LinkGenerator)
         ErsatzServer ersatz = new ErsatzServer()
         ersatz.expectations {
             get('/chat.postMessage') {
@@ -100,6 +102,8 @@ class SlackServiceSpec extends Specification implements ServiceUnitTest<SlackSer
 
     void 'there was an error trying to send the request to approve the user'() {
         given: 'a mocked remote server'
+        service.grailsLinkGenerator = Mock(LinkGenerator)
+
         ErsatzServer ersatz = new ErsatzServer()
         ersatz.expectations {
             get('/chat.postMessage') {
