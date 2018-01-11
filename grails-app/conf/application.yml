@@ -138,6 +138,7 @@ slack:
   apiUrl: https://slack.com/api
   token: '${SLACK_TOKEN}'
   channel: '${SLACK_CHANNEL}'
+  callbackUrl: '${SLACK_CALLBACK_URL}'
 ---
 environments:
     development:
@@ -149,3 +150,4 @@ environments:
     production:
         grails:
             serverURL: https://grails-slack.cfapps.io
+
