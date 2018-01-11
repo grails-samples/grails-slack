@@ -7,8 +7,8 @@ import grails.plugins.rest.client.RestBuilder
 import grails.plugins.rest.client.RestResponse
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
-import groovy.util.logging.Slf4j
 import org.grails.im.GrailsImEvents
+import groovy.util.logging.Slf4j
 import org.grails.im.entities.RequestInvite
 
 @Slf4j
@@ -28,7 +28,8 @@ class SlackNewUserSubscriberService implements GrailsConfigurationAware {
         callbackUrl = co.getProperty('slack.callbackUrl', String)
     }
 
-    @Subscriber(GrailsImEvents.NEW_USER)
+//    @Subscriber(GrailsImEvents.NEW_USER)
+    @Subscriber('newUser')
     void onNewUser(RequestInvite requestInvite) {
         send(requestInvite)
     }

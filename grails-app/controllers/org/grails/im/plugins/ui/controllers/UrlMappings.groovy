@@ -9,6 +9,7 @@ class UrlMappings {
         "/invite/reject"(controller: 'invite', action: 'reject', method: 'POST')
         "/api/invite/approve"(controller: 'apiInvite', action: 'approve', method: 'PUT')
         "/api/invite/reject"(controller: 'apiInvite', action: 'reject', method: 'PUT')
+        "/api/slack"(controller: 'apiSlack', action: 'callback', method: 'POST')
 
         "/"(view: '/index')
         "500"(view:'/error')
