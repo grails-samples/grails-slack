@@ -133,8 +133,19 @@ environments:
                 testOnReturn: false
                 jdbcInterceptors: ConnectionState
                 defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
-
+---
 slack:
   apiUrl: https://slack.com/api
   token: '${SLACK_TOKEN}'
   channel: '${SLACK_CHANNEL}'
+---
+environments:
+    development:
+        grails:
+            serverURL: http://localhost:8080
+    test:
+        grails:
+            serverURL: http://localhost:8080
+    production:
+        grails:
+            serverURL: https://grails-slack.cfapps.io
