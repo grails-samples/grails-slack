@@ -12,21 +12,19 @@ import org.grails.im.plugins.repository.CommunityUserRepository
 class ChangeInvitationStatusUseCaseService {
 
     CommunityUserRepository communityUserRepository
-
     ChangeInvitationStatusPublisherService changeInvitationStatusPublisherService
 
     void changeStatus(String email, RequestInviteStatus status) {
-        if ( communityUserRepository.find(email) != null ) {
+        if (communityUserRepository.find(email)) {
             communityUserRepository.update(email, status)
 
-            if ( status == RequestInviteStatus.APPROVED ) {
+            if (status == RequestInviteStatus.APPROVED) {
                 UserApproved userApproved = new UserApprovedImpl(email: email)
                 changeInvitationStatusPublisherService.publishApprovedUser(userApproved)
-            } else if ( status == RequestInviteStatus.REJECTED ) {
+            } else if (status == RequestInviteStatus.REJECTED) {
                 UserRejected userRejected = new UserRejectedImpl(email: email)
                 changeInvitationStatusPublisherService.publishRejectedUser(userRejected)
             }
         }
     }
-
 }

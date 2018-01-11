@@ -8,6 +8,7 @@ import grails.plugins.rest.client.RestResponse
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
+import org.grails.im.GrailsImEvents
 import org.grails.im.entities.UserApproved
 
 @Slf4j
@@ -17,7 +18,6 @@ class SlackInviteUserSubscriberService implements GrailsConfigurationAware {
     String apiUrl
     String token
     String channel
-
 
     @Override
     void setConfiguration(Config co) {
@@ -43,9 +43,8 @@ class SlackInviteUserSubscriberService implements GrailsConfigurationAware {
         }
     }
 
-    @Subscriber('approvedUser')
+    @Subscriber(GrailsImEvents.APPROVED_USER)
     void onUserApproved(UserApproved userApproved) {
         invite(userApproved.email)
     }
-
 }

@@ -36,7 +36,6 @@ class SlackInviteUserSubscriberServiceSpec extends Specification implements Serv
 
         where:
             email = 'john.doe@example.com'
-            about = 'About me...'
     }
 
     void 'there was an error trying to invite a user'() {
@@ -66,6 +65,5 @@ class SlackInviteUserSubscriberServiceSpec extends Specification implements Serv
 
         where:
             email = 'john.doe@example.com'
-            about = 'About me...'
     }
 }

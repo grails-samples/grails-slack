@@ -2,6 +2,7 @@ package org.grails.im.usecase
 
 import grails.events.EventPublisher
 import groovy.transform.CompileStatic
+import org.grails.im.GrailsImEvents
 import org.grails.im.entities.UserApproved
 import org.grails.im.entities.UserRejected
 
@@ -9,10 +10,10 @@ import org.grails.im.entities.UserRejected
 class ChangeInvitationStatusPublisherService implements EventPublisher {
 
     void publishApprovedUser(UserApproved userApproved) {
-        notify('approvedUser', userApproved)
+        notify(GrailsImEvents.APPROVED_USER, userApproved)
     }
 
     void publishRejectedUser(UserRejected userRejected) {
-        notify('rejectedUser', userRejected)
+        notify(GrailsImEvents.REJECTED_USER, userRejected)
     }
 }
