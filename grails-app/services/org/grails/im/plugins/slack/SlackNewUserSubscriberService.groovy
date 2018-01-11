@@ -7,9 +7,11 @@ import grails.plugins.rest.client.RestBuilder
 import grails.plugins.rest.client.RestResponse
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
+import groovy.util.logging.Slf4j
 import org.grails.im.GrailsImEvents
 import org.grails.im.entities.RequestInvite
 
+@Slf4j
 @CompileStatic
 class SlackNewUserSubscriberService implements GrailsConfigurationAware {
 
