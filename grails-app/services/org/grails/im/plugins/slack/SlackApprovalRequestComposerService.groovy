@@ -7,11 +7,11 @@ import org.grails.im.entities.RequestInvite
 @CompileStatic
 class SlackApprovalRequestComposerService {
 
-    LinkGenerator linkGenerator
+    LinkGenerator grailsLinkGenerator
 
     SlackApproveMessage compose(RequestInvite requestInvite) {
-        String approveLink = linkGenerator.link(controller: 'apiInvite', action: 'approve', params: [email: requestInvite.email])
-        String rejectLink = linkGenerator.link(controller: 'apiInvite', action: 'reject', params: [email: requestInvite.email])
+        String approveLink = grailsLinkGenerator.link(controller: 'apiInvite', action: 'approve', params: [email: requestInvite.email])
+        String rejectLink = grailsLinkGenerator.link(controller: 'apiInvite', action: 'reject', params: [email: requestInvite.email])
 
         new SlackApproveMessage(approveUrl: approveLink, rejectUrl: rejectLink, message: requestInvite.about)
     }
