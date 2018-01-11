@@ -1,2 +1,5 @@
+include 'entities'
+include 'admin'
+include 'app'
 rootProject.name = 'grails-slack'
 
