@@ -76,7 +76,7 @@ class SlackNewUserSubscriberService implements GrailsConfigurationAware {
         }
 
         if (!response.json.ok) {
-            log.error "There was an error inviting the user: ${response.json.error}"
+            log.error "There was an error posting to the slack channel Approve/Reject buttons: ${response.json.error}"
         }
     }
 }
