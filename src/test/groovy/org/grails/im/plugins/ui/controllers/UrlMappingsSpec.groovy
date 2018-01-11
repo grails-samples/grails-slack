@@ -15,9 +15,6 @@ class UrlMappingsSpec extends Specification implements UrlMappingsUnitTest<UrlMa
 
     def "test forward mappings"() {
         verifyForwardUrlMapping("/invite/request", controller: 'invite', action: 'request', method: 'POST')
-        verifyForwardUrlMapping("/invite/index", controller: 'invite', action: 'index', method: 'GET')
-        verifyForwardUrlMapping("/invite/approve", controller: 'invite', action: 'approve', method: 'POST')
-        verifyForwardUrlMapping("/invite/reject", controller: 'invite', action: 'reject', method: 'POST')
         verifyForwardUrlMapping("/api/invite/approve", controller: 'apiInvite', action: 'approve', method: 'PUT')
         verifyForwardUrlMapping("/api/invite/reject", controller: 'apiInvite', action: 'reject', method: 'PUT')
         verifyForwardUrlMapping("/", view: 'index')

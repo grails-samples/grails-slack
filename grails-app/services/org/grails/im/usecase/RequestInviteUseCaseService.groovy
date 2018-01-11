@@ -11,8 +11,12 @@ class RequestInviteUseCaseService {
     CommunityUserRepository communityUserRepository
 
     void request(RequestInvite requestInvite) {
-        if (!communityUserRepository.find(requestInvite.email)) {
+        if ( !existsRepository() || communityUserRepository.find(requestInvite.email) ) {
             requestInvitePublisherService.publishEvent(requestInvite)
         }
+    }
+
+    boolean existsRepository() {
+        communityUserRepository != null
     }
 }

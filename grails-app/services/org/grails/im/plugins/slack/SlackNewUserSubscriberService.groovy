@@ -12,8 +12,10 @@ class SlackNewUserSubscriberService {
 
     @Subscriber(GrailsImEvents.NEW_USER)
     void onNewUser(RequestInvite requestInvite) {
-        SlackApproveMessage slackApproveMessage = slackApprovalRequestComposerService.compose(requestInvite)
-        send(slackApproveMessage)
+        if (requestInvite != null) {
+            SlackApproveMessage slackApproveMessage = slackApprovalRequestComposerService.compose(requestInvite)
+            send(slackApproveMessage)
+        }
     }
 
     void send(SlackApproveMessage slackApproveMessage) {

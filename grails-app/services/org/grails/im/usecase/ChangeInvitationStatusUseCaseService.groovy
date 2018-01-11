@@ -15,9 +15,8 @@ class ChangeInvitationStatusUseCaseService {
     ChangeInvitationStatusPublisherService changeInvitationStatusPublisherService
 
     void changeStatus(String email, RequestInviteStatus status) {
-        if (communityUserRepository.find(email)) {
-            communityUserRepository.update(email, status)
-
+        if (!existsRepository() || communityUserRepository.find(email)) {
+            communityUserRepository?.update(email, status)
             if (status == RequestInviteStatus.APPROVED) {
                 UserApproved userApproved = new UserApprovedImpl(email: email)
                 changeInvitationStatusPublisherService.publishApprovedUser(userApproved)
@@ -26,5 +25,9 @@ class ChangeInvitationStatusUseCaseService {
                 changeInvitationStatusPublisherService.publishRejectedUser(userRejected)
             }
         }
+    }
+
+    boolean existsRepository() {
+        communityUserRepository != null
     }
 }
