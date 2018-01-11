@@ -1,7 +1,7 @@
 environments {
     development {
         grails {
-            serverURL = System.getenv('NGROK_URL') ?: 'http://localhost:8080'
+            serverURL = System.getenv('NGROK_URL') ?:  System.getProperty('NGROK_URL') ?: 'http://localhost:8080'
         }
     }
 }
