@@ -11,8 +11,7 @@ cfConfig {
     //App Details
     name = "grails-slack"
     host = "grails-slack"
-    filePath = "build/libs/grails-slack-${version}.war"
-    //domain = "https://grailsslack.cfapps.io/"
+    filePath = "${rootProject.projectDir}/app/build/libs/app-${version}.war"
     instances = 1
     memory = 2048
 
