@@ -41,7 +41,6 @@ class SlackService implements GrailsConfigurationAware {
     @CompileDynamic
     void send(RequestInvite requestInvite) {
         if (isSlackConfiguredCorrectly()) {
-            String url = "${apiUrl}/chat.postMessage?token={token}&channel={channel}&text={text}&attachments={attachments}"
             String attachments = """
 [{
     "fallback": "You can not approve users",
@@ -75,6 +74,9 @@ class SlackService implements GrailsConfigurationAware {
                 attachments: attachments,
             ]
 
+            String urlParams = params.keySet().collect { "${it}={${it}}" }.join('&')
+            String url = "${apiUrl}/chat.postMessage?${urlParams}"
+
             RestResponse response = new RestBuilder().get(url) {
                 urlVariables params
             }
@@ -94,12 +96,14 @@ class SlackService implements GrailsConfigurationAware {
     @CompileDynamic
     void invite(String email) {
         if (isSlackConfiguredCorrectly()) {
-            String url = "${apiUrl}/users.admin.invite?token={token}&channel={channel}&email={email}"
             Map<String, Object> params = [
                 token  : legacyToken,
                 channel: channel,
                 email  : email
             ]
+
+            String urlParams = params.keySet().collect { "${it}={${it}}" }.join('&')
+            String url = "${apiUrl}/users.admin.invite?${urlParams}"
 
             RestResponse response = new RestBuilder().get(url) {
                 urlVariables params
