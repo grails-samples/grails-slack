@@ -1,0 +1,13 @@
+### GMAIL Notifications
+
+If you consider the information the user supplied in the `about` field is insufficient, you can send an email automatically to request more.
+
+This is an optional feature.
+
+Current version configures a GMAIL server to send emails. In order to supply a valid email address and password, run the app wit suppying the sender email address and password as system properties.
+
+./gradlew -DGMAIL_EMAIL=XXXX -DGMAIL_PASSWORD=XXXX server:bootRun
+
+Note: first email may trigger gmail security warning and you may have to set your gmail account to allow less secure apps in order to get the email to send.
+
+image::email-allow-less-secured-apps-on-2.png[]
