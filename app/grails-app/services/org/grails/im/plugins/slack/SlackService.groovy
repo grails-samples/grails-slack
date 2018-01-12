@@ -44,7 +44,7 @@ class SlackService implements GrailsConfigurationAware {
     @CompileDynamic
     void send(RequestInvite requestInvite) {
         if (isSlackConfiguredCorrectly()) {
-            String callbackUrl = grailsLinkGenerator.link(absolute: true, controller: 'apiSlack', action: 'callback')
+            String callbackUrl = grailsLinkGenerator.link(absolute: true, controller: 'apiSlack', action: 'callback', method: 'POST')
             log.debug 'callback url: {}', callbackUrl
 
             String url = "${apiUrl}/chat.postMessage?token={token}&channel={channel}&text={text}&attachments={attachments}"
