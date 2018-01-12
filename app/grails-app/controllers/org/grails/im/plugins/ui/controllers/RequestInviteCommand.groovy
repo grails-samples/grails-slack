@@ -12,7 +12,7 @@ class RequestInviteCommand implements Validateable, RequestInvite {
 
     static constraints = {
         email nullable: false, blank: false, email: true
-        about nullable: false, blank: false
+        about nullable: false, blank: false, minSize: 50
     }
 
     Object asType(Class clazz) {
