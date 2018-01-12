@@ -521,6 +521,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#slack-configuration">Slack configuration</a></li>
 </ul>
 </li>
+<li><a href="#deploy-the-app">Deploy the app</a></li>
 <li><a href="#picture-usage-rights">Picture Usage Rights</a></li>
 </ul>
 </div>
@@ -529,7 +530,7 @@ table.CodeRay td.code>pre{padding:0}
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>This project is a Grails application to moderate and approve users before they can join your Slack channel. When a user
+<p>This project is a Grails application to moderate and approve users before they can join your Slack community. When a user
 requests to join Slack, a message is posted into a private Slack channel with two buttons to approve or reject the
 request. If approved the application sends an Slack invitation email to the user to join in.</p>
 </div>
@@ -628,6 +629,42 @@ after they have been approved. It is recommended to use another new user for thi
 <img src="./images/slack-install-app-to-workspace.png" alt="slack install app to workspace">
 </div>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>Once you install your app you will see an OAuth Access Token for your workspace.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/slack-oauth-token.png" alt="slack oauth token">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="deploy-the-app">Deploy the app</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In order to deploy the app.</p>
+</div>
+<div class="paragraph">
+<p>Assemble:</p>
+</div>
+<div class="paragraph">
+<p><code>./gradlew :app:assemble</code></p>
+</div>
+<div class="paragraph">
+<p>Run it:</p>
+</div>
+<div class="paragraph">
+<p><code>java -jar -DSLACK_CHANNEL=XXXX  -DSLACK_LEGACY_TOKEN=XXXX -DSLACK_OAUTH_TOKEN=XXXX -DPRODUCTION_URL=https://yourserver.com  app/build/libs/app-0.1.war</code></p>
+</div>
+<div class="paragraph">
+<p>Please note SLACK_CHANNEL, SLACK_LEGACY_TOKEN, SLACK_OAUTH_TOKEN are the values extracted in the previous section of the documentation. PRODUCTION_URL is the
+server url where you deploy the app.</p>
 </div>
 </div>
 </div>
@@ -642,7 +679,7 @@ after they have been approved. It is recommended to use another new user for thi
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-01-12 11:13:19 UTC
+Last updated 2018-01-12 11:49:33 UTC
 </div>
 </div>
 </body>
