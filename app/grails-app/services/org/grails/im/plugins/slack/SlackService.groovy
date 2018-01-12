@@ -8,8 +8,8 @@ import grails.plugins.rest.client.RestResponse
 import grails.web.mapping.LinkGenerator
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
-import org.grails.im.GrailsImEvents
 import groovy.util.logging.Slf4j
+import org.grails.im.GrailsImEvents
 import org.grails.im.entities.RequestInvite
 import org.grails.im.entities.UserApproved
 
@@ -43,10 +43,8 @@ class SlackService implements GrailsConfigurationAware {
 
     @CompileDynamic
     void send(RequestInvite requestInvite) {
-        if ( isSlackConfiguredCorrectly() ) {
-
-
-            String callbackUrl = grailsLinkGenerator.link(absolute: true, controller: 'apiSlack', action: 'index')
+        if (isSlackConfiguredCorrectly()) {
+            String callbackUrl = grailsLinkGenerator.link(absolute: true, controller: 'apiSlack', action: 'callback')
             log.debug 'callback url: {}', callbackUrl
 
             String url = "${apiUrl}/chat.postMessage?token={token}&channel={channel}&text={text}&attachments={attachments}"
@@ -78,10 +76,10 @@ class SlackService implements GrailsConfigurationAware {
             String text = message(requestInvite)
 
             Map<String, String> params = [
-                    token      : token,
-                    channel    : channel,
-                    text       : text,
-                    attachments: attachments,
+                token      : token,
+                channel    : channel,
+                text       : text,
+                attachments: attachments,
             ]
 
             RestResponse response = new RestBuilder().get(url) {
@@ -102,13 +100,13 @@ class SlackService implements GrailsConfigurationAware {
 
     @CompileDynamic
     void invite(String email) {
-
-        if ( isSlackConfiguredCorrectly() ) {
+        if (isSlackConfiguredCorrectly()) {
             String url = "${apiUrl}/users.admin.invite?token={token}&channel={channel}&email={email}"
-            Map<String, Object> params = [token: legacyToken,
-                                          channel: channel,
-                                          email: email
-            ] as Map<String, Object>
+            Map<String, Object> params = [
+                token  : legacyToken,
+                channel: channel,
+                email  : email
+            ]
 
             RestResponse response = new RestBuilder().get(url) {
                 urlVariables params
