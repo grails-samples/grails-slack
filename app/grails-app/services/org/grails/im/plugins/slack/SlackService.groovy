@@ -5,6 +5,7 @@ import grails.core.support.GrailsConfigurationAware
 import grails.events.annotation.Subscriber
 import grails.plugins.rest.client.RestBuilder
 import grails.plugins.rest.client.RestResponse
+import groovy.json.StreamingJsonBuilder
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
@@ -44,30 +45,7 @@ class SlackService implements GrailsConfigurationAware {
     @CompileDynamic
     void send(RequestInvite requestInvite) {
         if (isSlackConfiguredCorrectly()) {
-            String attachments = """
-[{
-    "fallback": "You can not approve users",
-    "callback_id": "approver",
-    "color": "#3AA3E3",
-    "attachment_type": "default",
-    "actions": [
-        {
-            "name": "Approve",
-            "text": "Approve",
-            "style": "primary",
-            "type": "button",
-            "value": "${requestInvite.email}"
-        },
-        {
-            "name": "Reject",
-            "text": "Reject",
-            "style": "danger",
-            "type": "button",
-            "value": "${requestInvite.email}"
-        }
-    ]
-}]
-"""
+            String attachments = this.generateAttachments(requestInvite.email)
             String text = message(requestInvite)
 
             Map<String, String> params = [
@@ -90,6 +68,43 @@ class SlackService implements GrailsConfigurationAware {
         } else {
             logSlackWrongConfiguration()
         }
+    }
+
+    @CompileDynamic
+    private String generateAttachments(String email) {
+        new StringWriter().with { w ->
+            def builder = new StreamingJsonBuilder(w)
+
+            builder.call(
+                [
+                    {
+                        fallback 'You can not approve users'
+                        callback_id 'approver'
+                        color '#3AA3E3'
+                        attachment_type 'default'
+                        actions(
+                            [
+                                "name" : "Approve",
+                                "text" : "Approve",
+                                "style": "primary",
+                                "type" : "button",
+                                "value": "${email}"
+                            ],
+                            [
+                                "name" : "Reject",
+                                "text" : "Reject",
+                                "style": "danger",
+                                "type" : "button",
+                                "value": "${email}"
+                            ]
+                        )
+                    }
+                ]
+            )
+
+            return w.toString()
+        }
+
     }
 
     String message(RequestInvite requestInvite) {
