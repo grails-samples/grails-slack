@@ -10,7 +10,7 @@ if [[ $EXIT_STATUS -ne 0 ]]; then
     exit $EXIT_STATUS
 fi
 
-./gradlew app:asciidoctor || EXIT_STATUS=$?
+./gradlew doc:asciidoctor || EXIT_STATUS=$?
 
 if [[ $EXIT_STATUS -ne 0 ]]; then
     echo "Documentation generation failed"
