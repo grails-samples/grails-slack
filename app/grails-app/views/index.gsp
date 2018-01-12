@@ -13,7 +13,7 @@
 
     <asset:image src="slack.svg" width="200" alt="Slack"/>
     <h1>Grails Community Slack</h1>
-    <p>Please provide information about yourself in the second field, including real name, current job title and employer (or better a link to your LinkedIn profile). Without this information your invite will not be approved. We do not retain this information it is simply for approval purposes and is due to previous abuse of the system and to avoid disruptive members and spam.</p>
+    <p>Please provide information about yourself in the second field, including real name, current job title, and employer (or better a link to your LinkedIn profile). Without this information, your invite will not be approved. We request this information for approval purposes and is due to previous abuse of the system and to avoid disruptive members and spam.</p>
     <g:form controller="invite" action="request">
         <ol>
             <li>
