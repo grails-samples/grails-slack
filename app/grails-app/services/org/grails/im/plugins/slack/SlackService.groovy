@@ -74,7 +74,7 @@ class SlackService implements GrailsConfigurationAware {
                 attachments: attachments,
             ]
 
-            String urlParams = params.keySet().collect { "${it}={${it}}" }.join('&')
+            String urlParams = this.generateUrlParamsStringFromMap(params)
             String url = "${apiUrl}/chat.postMessage?${urlParams}"
 
             RestResponse response = new RestBuilder().get(url) {
@@ -102,7 +102,7 @@ class SlackService implements GrailsConfigurationAware {
                 email  : email
             ]
 
-            String urlParams = params.keySet().collect { "${it}={${it}}" }.join('&')
+            String urlParams = this.generateUrlParamsStringFromMap(params)
             String url = "${apiUrl}/users.admin.invite?${urlParams}"
 
             RestResponse response = new RestBuilder().get(url) {
@@ -116,6 +116,10 @@ class SlackService implements GrailsConfigurationAware {
             log.debug 'Slack is not configured correctly. Missing token or channel'
         }
 
+    }
+
+    private String generateUrlParamsStringFromMap(Map<String, String> map) {
+        return map.keySet().collect { "${it}={${it}}" }.join('&')
     }
 
     @Subscriber(GrailsImEvents.APPROVED_USER)
