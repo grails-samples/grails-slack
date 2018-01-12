@@ -46,6 +46,21 @@ image::slack-install-app-to-workspace.png[align=center]
 
 image::slack-oauth-token.png[align=center]
 
+== Deploy the app
+
+In order to deploy the app.
+
+Assemble:
+
+`./gradlew :app:assemble`
+
+Run it:
+
+`java -jar -DSLACK_CHANNEL=XXXX  -DSLACK_LEGACY_TOKEN=XXXX -DSLACK_OAUTH_TOKEN=XXXX -DPRODUCTION_URL=https://yourserver.com  app/build/libs/app-0.1.war`
+
+Please note SLACK_CHANNEL, SLACK_LEGACY_TOKEN, SLACK_OAUTH_TOKEN are the values extracted in the previous section of the documentation. PRODUCTION_URL is the
+server url where you deploy the app.
+
 == Picture Usage Rights
 
 https://pixabay.com/en/cup-drinks-business-coffee-shop-2884023/[The picture used in the home screen] is licensed under CC0 Creative Commons, Free for commercial use  No attribution required
