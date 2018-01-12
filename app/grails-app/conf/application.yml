@@ -97,4 +97,4 @@ environments:
             serverURL: http://localhost:8080
     production:
         grails:
-            serverURL: https://grails-slack.cfapps.io
+            serverURL: '${PRODUCTION_URL}'
