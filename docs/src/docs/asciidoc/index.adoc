@@ -42,6 +42,10 @@ image::slack-legacy-token.png[align=center]
 
 image::slack-install-app-to-workspace.png[align=center]
 
+- Once you install your app you will see an OAuth Access Token for your workspace.
+
+image::slack-oauth-token.png[align=center]
+
 == Picture Usage Rights
 
 https://pixabay.com/en/cup-drinks-business-coffee-shop-2884023/[The picture used in the home screen] is licensed under CC0 Creative Commons, Free for commercial use  No attribution required
