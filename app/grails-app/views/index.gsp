@@ -26,6 +26,9 @@
             </li>
         </ol>
         <input type="submit" value="${g.message(code: 'invite.requestInvitation', default: 'Request Invitation')}"/>
+        <g:each in="${flash.error}">
+            <b><br/>${it}</b>
+        </g:each>
 
         <p>We'd love you to join our team on Slack. Submit the form above to receive an invitation email from Slack. If you're not on Slack, you'll need to create a free account as part of the process.</p>
     </g:form>

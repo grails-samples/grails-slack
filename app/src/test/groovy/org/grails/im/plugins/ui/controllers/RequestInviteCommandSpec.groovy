@@ -1,7 +1,6 @@
 package org.grails.im.plugins.ui.controllers
 
 import org.grails.im.entities.RequestInvite
-import org.grails.im.plugins.ui.controllers.RequestInviteCommand
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Subject
@@ -12,7 +11,6 @@ class RequestInviteCommandSpec extends Specification {
     @Subject
     @Shared
     RequestInviteCommand cmd = new RequestInviteCommand()
-
 
     @Unroll
     void "email '#value' #description"(String value, boolean expected, String expectedErrorCode, String description) {
@@ -46,7 +44,8 @@ class RequestInviteCommandSpec extends Specification {
         value                  | expected | expectedErrorCode
         null                   |  false   | 'nullable'
         ''                     |  false   | 'blank'
-        'I am OK'              |  true    | null
+        'I am not OK'          |  false   | 'minSize.notmet'
+        'a'*50                 |  true    | null
         description = expected ? 'is not valid' : 'is valid'
     }
 
