@@ -1,2 +1,2 @@
-[Documentation](https://grails-samples.github.io/grails-slack/)
+[Documentation](https://grails-samples.github.io/grails-slack/snapshot/)
  
