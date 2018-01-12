@@ -1,6 +1,6 @@
 = Slack Inviter
 
-This project is a Grails application to moderate and approve users before they can join your Slack community. When a user
+This project is a http://grails.org[Grails application] to moderate and approve users before they can join your Slack community. When a user
 requests to join Slack, a message is posted into a private Slack channel with two buttons to approve or reject the
 request. If approved the application sends an Slack invitation email to the user to join in.
 
