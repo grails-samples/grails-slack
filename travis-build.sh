@@ -5,6 +5,18 @@ export EXIT_STATUS=0
 
 ./gradlew app:check || EXIT_STATUS=$?
 
+if [[ $EXIT_STATUS -ne 0 ]]; then
+    echo "Project Check failed"
+    exit $EXIT_STATUS
+fi
+
+./gradlew app:asiidoctor || EXIT_STATUS=$?
+
+if [[ $EXIT_STATUS -ne 0 ]]; then
+    echo "Documentation generation failed"
+    exit $EXIT_STATUS
+fi
+
 echo "Tag: $TRAVIS_TAG"
 
 if [[ $EXIT_STATUS ]]; then
