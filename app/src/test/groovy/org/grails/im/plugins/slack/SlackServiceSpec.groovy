@@ -1,6 +1,5 @@
 package org.grails.im.plugins.slack
 
-import grails.web.mapping.LinkGenerator
 import com.stehno.ersatz.ContentType
 import com.stehno.ersatz.Encoders
 import com.stehno.ersatz.ErsatzServer
@@ -72,7 +71,6 @@ class SlackServiceSpec extends Specification implements ServiceUnitTest<SlackSer
 
     void 'send request to slack'() {
         given: 'a mocked remote server'
-        service.grailsLinkGenerator = Mock(LinkGenerator)
         ErsatzServer ersatz = new ErsatzServer()
         ersatz.expectations {
             get('/chat.postMessage') {
@@ -102,8 +100,6 @@ class SlackServiceSpec extends Specification implements ServiceUnitTest<SlackSer
 
     void 'there was an error trying to send the request to approve the user'() {
         given: 'a mocked remote server'
-        service.grailsLinkGenerator = Mock(LinkGenerator)
-
         ErsatzServer ersatz = new ErsatzServer()
         ersatz.expectations {
             get('/chat.postMessage') {

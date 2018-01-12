@@ -5,7 +5,6 @@ import grails.core.support.GrailsConfigurationAware
 import grails.events.annotation.Subscriber
 import grails.plugins.rest.client.RestBuilder
 import grails.plugins.rest.client.RestResponse
-import grails.web.mapping.LinkGenerator
 import groovy.transform.CompileDynamic
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
@@ -21,8 +20,6 @@ class SlackService implements GrailsConfigurationAware {
     String token
     String legacyToken
     String channel
-
-    LinkGenerator grailsLinkGenerator
 
     @Override
     void setConfiguration(Config co) {
@@ -44,9 +41,6 @@ class SlackService implements GrailsConfigurationAware {
     @CompileDynamic
     void send(RequestInvite requestInvite) {
         if (isSlackConfiguredCorrectly()) {
-            String callbackUrl = grailsLinkGenerator.link(absolute: true, controller: 'apiSlack', action: 'callback', method: 'POST')
-            log.debug 'callback url: {}', callbackUrl
-
             String url = "${apiUrl}/chat.postMessage?token={token}&channel={channel}&text={text}&attachments={attachments}"
             String attachments = """
 [{
@@ -54,7 +48,6 @@ class SlackService implements GrailsConfigurationAware {
     "callback_id": "approver",
     "color": "#3AA3E3",
     "attachment_type": "default",
-    "response_url": "${callbackUrl}",
     "actions": [
         {
             "name": "Approve",
