@@ -18,7 +18,7 @@ if [[ $EXIT_STATUS -ne 0 ]]; then
 fi
 
 # If this is the master branch then update the snapshot
-if [[ $TRAVIS_BRANCH == 'master' ]]; then
+if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then
 
     git config --global user.name "$GIT_NAME"
     git config --global user.email "$GIT_EMAIL"
