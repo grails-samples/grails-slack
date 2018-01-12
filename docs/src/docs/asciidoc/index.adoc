@@ -41,3 +41,7 @@ image::slack-legacy-token.png[align=center]
 - Finall go back to _OAuth & Permissions_ and click on _Install App to Workspace_.
 
 image::slack-install-app-to-workspace.png[align=center]
+
+== Picture Usage Rights
+
+https://pixabay.com/en/cup-drinks-business-coffee-shop-2884023/[The picture used in the home screen] is licensed under CC0 Creative Commons, Free for commercial use  No attribution required
