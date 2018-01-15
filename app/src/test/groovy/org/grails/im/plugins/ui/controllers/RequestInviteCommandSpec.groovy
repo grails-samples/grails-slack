@@ -1,6 +1,7 @@
 package org.grails.im.plugins.ui.controllers
 
 import org.grails.im.entities.RequestInvite
+import org.grails.im.plugins.validator.CaptchaValidatorService
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Subject
@@ -63,6 +64,11 @@ class RequestInviteCommandSpec extends Specification {
 
     @Unroll
     void "captcha '#value' #description"() {
+        given:
+        cmd.captchaValidatorService = Stub(CaptchaValidatorService) {
+            isValid(value) >> isValidCaptcha
+        }
+
         when:
         cmd.captcha = value
 
@@ -71,11 +77,11 @@ class RequestInviteCommandSpec extends Specification {
         cmd.errors['captcha']?.code == expectedErrorCode
 
         where:
-        value    | expected | expectedErrorCode
-        'Grails' | true     | null
-        null     | false    | 'nullable'
-        ''       | false    | 'blank'
-        'php'    | false    | 'wrongValue'
+        value    | isValidCaptcha | expected | expectedErrorCode
+        'Grails' | true           | true     | null
+        null     | false          | false    | 'nullable'
+        ''       | false          | false    | 'blank'
+        'php'    | false          | false    | 'wrongValue'
         description = expected ? 'is valid' : 'is not valid'
     }
 }

@@ -4,9 +4,13 @@ import grails.compiler.GrailsCompileStatic
 import grails.validation.Validateable
 import org.grails.im.entities.RequestInvite
 import org.grails.im.entities.RequestInviteImpl
+import org.grails.im.plugins.validator.CaptchaValidatorService
 
 @GrailsCompileStatic
 class RequestInviteCommand implements Validateable, RequestInvite {
+
+    CaptchaValidatorService captchaValidatorService
+
     String email
     String about
     String captcha
@@ -15,7 +19,7 @@ class RequestInviteCommand implements Validateable, RequestInvite {
         email nullable: false, blank: false, email: true
         about nullable: false, blank: false, minSize: 50
         captcha nullable: false, blank: false, validator: { String val, RequestInviteCommand obj ->
-            if (val && val.trim().toLowerCase() != 'grails') {
+            if (!obj.captchaValidatorService.isValid(val)) {
                 return 'wrongValue'
             }
         }
