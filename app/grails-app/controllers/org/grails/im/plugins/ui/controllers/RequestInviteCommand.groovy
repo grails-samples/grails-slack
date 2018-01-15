@@ -9,10 +9,16 @@ import org.grails.im.entities.RequestInviteImpl
 class RequestInviteCommand implements Validateable, RequestInvite {
     String email
     String about
+    String captcha
 
     static constraints = {
         email nullable: false, blank: false, email: true
         about nullable: false, blank: false, minSize: 50
+        captcha nullable: false, blank: false, validator: { String val, RequestInviteCommand obj ->
+            if (val && val.trim().toLowerCase() != 'grails') {
+                return 'wrongValue'
+            }
+        }
     }
 
     Object asType(Class clazz) {

@@ -19,12 +19,16 @@
         <ol>
             <li>
                 <label><g:message code="communityUser.email" default="Email"/></label>
-                <g:textField name="email"/>
+                <g:textField name="email" value="${email}"/>
             </li>
             <li>
                 <label><g:message code="communityUser.about" default="About"/></label>
-                <g:textArea name="about"/>
+                <g:textArea name="about" value="${about}"/>
                 <p>Please provide information about yourself, including real name, current job title, and employer (or better a link to your LinkedIn profile). Without this information, your invite will not be approved. We request this information for approval purposes and is due to previous abuse of the system and to avoid disruptive members and spam.</p>
+            </li>
+            <li>
+                <label><g:message code="register.captcha" default="What is the best framework in the world?"/></label>
+                <g:textField name="captcha" value="${captcha}"/>
             </li>
         </ol>
         <input type="submit" value="${g.message(code: 'invite.requestInvitation', default: 'Request Invitation')}"/>

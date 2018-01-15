@@ -20,7 +20,7 @@ class InviteController {
     def request(RequestInviteCommand cmd) {
         if (cmd.hasErrors()) {
             flash.error = this.beanMessage(cmd, messageSource)
-            render view: '/index'
+            render view: '/index', model: [email: cmd.email, about: cmd.about, captcha: cmd.captcha]
             return
         }
         requestInviteUseCaseService.request(cmd as RequestInvite)
