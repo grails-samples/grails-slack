@@ -28,6 +28,11 @@ image::slack-configure-app.png[align=center]
 
 image::slack-set-callback-url.png[align=center]
 
+- Select _Basic Information_ on the left menu and scroll down to _App Credentials_. Copy the _Verification Token_
+because you will need this later to verify that the callbacks to the Grails application are from Slack.
+
+image::slack-app-credentials.png[align=center]
+
 - Select _OAuth & Permissions_ on the left menu and add the scope _Send messages as user_. This permission is necessary
 to send the message with the user information to the channel.
 
@@ -56,11 +61,12 @@ Assemble:
 
 Run it:
 
-`java -jar -DSLACK_CHANNEL=XXXX  -DSLACK_LEGACY_TOKEN=XXXX -DSLACK_OAUTH_TOKEN=XXXX -DPRODUCTION_URL=https://yourserver.com  app/build/libs/app-0.1.war`
+`java -jar -DSLACK_CHANNEL=XXXX -DSLACK_LEGACY_TOKEN=XXXX -DSLACK_OAUTH_TOKEN=XXXX -DPRODUCTION_URL=https://yourserver.com -DSLACK_VERIFICATION_TOKEN=XXXX app/build/libs/app-0.1.war`
 
-Please note SLACK_CHANNEL, SLACK_LEGACY_TOKEN, SLACK_OAUTH_TOKEN are the values extracted in the previous section of the documentation. PRODUCTION_URL is the
-server url where you deploy the app.
+Please note `SLACK_CHANNEL`, `SLACK_LEGACY_TOKEN`, `SLACK_OAUTH_TOKEN`, `SLACK_VERIFICATION_TOKEN` are the values
+extracted in the previous section of the documentation. PRODUCTION_URL is the server url where you deploy the app.
 
 == Picture Usage Rights
 
-https://pixabay.com/en/cup-drinks-business-coffee-shop-2884023/[The picture used in the home screen] is licensed under CC0 Creative Commons, Free for commercial use  No attribution required
+https://pixabay.com/en/cup-drinks-business-coffee-shop-2884023/[The picture used in the home screen] is licensed under
+ CC0 Creative Commons, Free for commercial use  No attribution required.

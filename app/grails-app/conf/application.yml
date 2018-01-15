@@ -90,6 +90,7 @@ slack:
   token: '${SLACK_OAUTH_TOKEN}' #send Approve/reject message
   legacyToken: '${SLACK_LEGACY_TOKEN}' # Invite New users
   channel: '${SLACK_CHANNEL}'
+  verificationToken: '${SLACK_VERIFICATION_TOKEN}'
 ---
 environments:
     test:
