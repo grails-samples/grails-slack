@@ -27,9 +27,8 @@ class RequestInviteCommandSpec extends Specification {
         ''                     |  false   | 'blank'
         'contact@gmail.com'    |  true    | null
         'contact'              |  false   | 'email.invalid'
-        description = expected ? 'is not valid' : 'is valid'
+        description = expected ? 'is valid' : 'is not valid'
     }
-
 
     @Unroll
     void "about '#value' #description"(String value, boolean expected, String expectedErrorCode, String description) {
@@ -46,7 +45,7 @@ class RequestInviteCommandSpec extends Specification {
         ''                     |  false   | 'blank'
         'I am not OK'          |  false   | 'minSize.notmet'
         'a'*50                 |  true    | null
-        description = expected ? 'is not valid' : 'is valid'
+        description = expected ? 'is valid' : 'is not valid'
     }
 
     void "as RequestInvite"() {
@@ -60,5 +59,23 @@ class RequestInviteCommandSpec extends Specification {
         requestInvite
         requestInvite.email == 'email@address.com'
         requestInvite.about == 'I am OK'
+    }
+
+    @Unroll
+    void "captcha '#value' #description"() {
+        when:
+        cmd.captcha = value
+
+        then:
+        expected == cmd.validate(['captcha'])
+        cmd.errors['captcha']?.code == expectedErrorCode
+
+        where:
+        value    | expected | expectedErrorCode
+        'Grails' | true     | null
+        null     | false    | 'nullable'
+        ''       | false    | 'blank'
+        'php'    | false    | 'wrongValue'
+        description = expected ? 'is valid' : 'is not valid'
     }
 }
