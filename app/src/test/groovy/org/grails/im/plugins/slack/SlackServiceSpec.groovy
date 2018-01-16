@@ -11,6 +11,13 @@ import static net.javacrumbs.jsonunit.JsonAssert.assertJsonEquals
 
 class SlackServiceSpec extends Specification implements ServiceUnitTest<SlackService> {
 
+    Closure doWithConfig() {{ config ->
+        config.slack.apiUrl = "https://slack.com/api"
+        config.slack.token = "x"
+        config.slack.legacyToken = "x"
+        config.slack.channel = "x"
+    }}
+
     void 'invite a user'() {
         given: 'a mocked remote server'
         ErsatzServer ersatz = new ErsatzServer()
