@@ -594,6 +594,19 @@ the user request.</p>
 <div class="ulist">
 <ul>
 <li>
+<p>Select <em>Basic Information</em> on the left menu and scroll down to <em>App Credentials</em>. Copy the <em>Verification Token</em>
+because you will need this later to verify that the callbacks to the Grails application are from Slack.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/slack-app-credentials.png" alt="slack app credentials">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
 <p>Select <em>OAuth &amp; Permissions</em> on the left menu and add the scope <em>Send messages as user</em>. This permission is necessary
 to send the message with the user information to the channel.</p>
 </li>
@@ -660,11 +673,11 @@ after they have been approved. It is recommended to use another new user for thi
 <p>Run it:</p>
 </div>
 <div class="paragraph">
-<p><code>java -jar -DSLACK_CHANNEL=XXXX  -DSLACK_LEGACY_TOKEN=XXXX -DSLACK_OAUTH_TOKEN=XXXX -DPRODUCTION_URL=https://yourserver.com  app/build/libs/app-0.1.war</code></p>
+<p><code>java -jar -DSLACK_CHANNEL=XXXX -DSLACK_LEGACY_TOKEN=XXXX -DSLACK_OAUTH_TOKEN=XXXX -DPRODUCTION_URL=https://yourserver.com -DSLACK_VERIFICATION_TOKEN=XXXX app/build/libs/app-0.1.war</code></p>
 </div>
 <div class="paragraph">
-<p>Please note SLACK_CHANNEL, SLACK_LEGACY_TOKEN, SLACK_OAUTH_TOKEN are the values extracted in the previous section of the documentation. PRODUCTION_URL is the
-server url where you deploy the app.</p>
+<p>Please note <code>SLACK_CHANNEL</code>, <code>SLACK_LEGACY_TOKEN</code>, <code>SLACK_OAUTH_TOKEN</code>, <code>SLACK_VERIFICATION_TOKEN</code> are the values
+extracted in the previous section of the documentation. PRODUCTION_URL is the server url where you deploy the app.</p>
 </div>
 </div>
 </div>
@@ -672,14 +685,15 @@ server url where you deploy the app.</p>
 <h2 id="picture-usage-rights">Picture Usage Rights</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="https://pixabay.com/en/cup-drinks-business-coffee-shop-2884023/">The picture used in the home screen</a> is licensed under CC0 Creative Commons, Free for commercial use  No attribution required</p>
+<p><a href="https://pixabay.com/en/cup-drinks-business-coffee-shop-2884023/">The picture used in the home screen</a> is licensed under
+ CC0 Creative Commons, Free for commercial use  No attribution required.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-01-16 06:45:25 UTC
+Last updated 2018-01-16 07:06:51 UTC
 </div>
 </div>
 </body>
