@@ -1,6 +1,7 @@
 package org.grails.im.plugins.ui.controllers
 
 import org.grails.im.entities.RequestInvite
+import org.grails.im.plugins.validator.CaptchaValidator
 import org.grails.im.plugins.validator.CaptchaValidatorService
 import spock.lang.Shared
 import spock.lang.Specification
@@ -65,7 +66,7 @@ class RequestInviteCommandSpec extends Specification {
     @Unroll
     void "captcha '#value' #description"() {
         given:
-        cmd.captchaValidatorService = Stub(CaptchaValidatorService) {
+        cmd.captchaValidator = Stub(CaptchaValidator) {
             isValid(value) >> isValidCaptcha
         }
 

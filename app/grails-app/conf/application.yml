@@ -91,6 +91,9 @@ slack:
   legacyToken: '${SLACK_LEGACY_TOKEN}' # Invite New users
   channel: '${SLACK_CHANNEL}'
 ---
+requestinvite:
+    captcha: 'grails'
+---
 environments:
     test:
         grails:
