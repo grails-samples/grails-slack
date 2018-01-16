@@ -7,6 +7,7 @@ import grails.testing.services.ServiceUnitTest
 import org.grails.im.entities.RequestInviteImpl
 import org.grails.im.entities.UserApprovedImpl
 import spock.lang.Specification
+import static net.javacrumbs.jsonunit.JsonAssert.assertJsonEquals
 
 class SlackServiceSpec extends Specification implements ServiceUnitTest<SlackService> {
 
@@ -125,5 +126,41 @@ class SlackServiceSpec extends Specification implements ServiceUnitTest<SlackSer
         where:
         email = 'john.doe@example.com'
         about = 'bla, bla'
+    }
+
+    void 'generateAttachments produces expected JSON'() {
+        given:
+        def expected = """
+[
+   {
+      "fallback":"You can not approve users",
+      "callback_id":"approver",
+      "color":"#3AA3E3",
+      "attachment_type":"default",
+      "actions":[
+         {
+            "name":"Approve",
+            "text":"Approve",
+            "style":"primary",
+            "type":"button",
+            "value":"me@email.com"
+         },
+         {
+            "name":"Reject",
+            "text":"Reject",
+            "style":"danger",
+            "type":"button",
+            "value":"me@email.com"
+         }
+      ]
+   }
+]
+"""
+        when:
+        String result = service.generateAttachments('me@email.com')
+
+        then:
+        result
+        assertJsonEquals(result, expected)
     }
 }
