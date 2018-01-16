@@ -63,6 +63,7 @@ dependencies {
     testRuntime "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
     testRuntime "org.seleniumhq.selenium:selenium-remote-driver:$seleniumVersion"
     testRuntime "org.seleniumhq.selenium:selenium-api:$seleniumVersion"
+    testCompile "net.javacrumbs.json-unit:json-unit:$jsonUnitVersion"
 
     compile project(':entities')
 }

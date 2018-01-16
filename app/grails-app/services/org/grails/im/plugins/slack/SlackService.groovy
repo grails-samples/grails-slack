@@ -101,8 +101,7 @@ class SlackService implements GrailsConfigurationAware {
                 ]
             )
             w.toString()
-        }
-
+        }.toString()
     }
 
     String message(RequestInvite requestInvite) {
