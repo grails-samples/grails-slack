@@ -30,7 +30,10 @@ class SlackService implements GrailsConfigurationAware {
     }
 
     boolean isSlackConfiguredCorrectly() {
-        token && channel
+        token && token != '${SLACK_OAUTH_TOKEN}' &&
+        channel && channel != '${SLACK_CHANNEL}' &&
+        legacyToken && legacyToken != '${SLACK_LEGACY_TOKEN}' &&
+        apiUrl
     }
 
     @Subscriber(GrailsImEvents.NEW_USER)
@@ -85,7 +88,7 @@ class SlackService implements GrailsConfigurationAware {
                 log.error "There was an error posting to the slack channel Approve/Reject buttons: ${response.json.error}"
             }
         } else {
-            log.debug 'Slack is not configured correctly. Missing token or channel'
+            logSlackWrongConfiguration()
         }
     }
 
@@ -113,9 +116,12 @@ class SlackService implements GrailsConfigurationAware {
                 log.error "There was an error inviting the user: ${response.json.error}"
             }
         } else {
-            log.debug 'Slack is not configured correctly. Missing token or channel'
+            logSlackWrongConfiguration()
         }
+    }
 
+    void logSlackWrongConfiguration() {
+        log.debug 'Slack is not configured correctly. Missing oauth token, legacy token or channel'
     }
 
     private String generateUrlParamsStringFromMap(Map<String, String> map) {
