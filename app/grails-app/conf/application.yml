@@ -92,6 +92,9 @@ slack:
   channel: '${SLACK_CHANNEL}'
   verificationToken: '${SLACK_VERIFICATION_TOKEN}'
 ---
+requestinvite:
+    captcha: 'grails'
+---
 environments:
     test:
         grails:
