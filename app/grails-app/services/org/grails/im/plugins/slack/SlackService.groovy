@@ -98,8 +98,7 @@ class SlackService implements GrailsConfigurationAware {
                     }
                 ]
             )
-
-            return w.toString()
+            w.toString()
         }
 
     }
