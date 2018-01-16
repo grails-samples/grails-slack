@@ -70,8 +70,7 @@ class SlackService implements GrailsConfigurationAware {
     @CompileDynamic
     String generateAttachments(String email) {
         new StringWriter().with { w ->
-            def builder = new StreamingJsonBuilder(w)
-
+            StreamingJsonBuilder builder = new StreamingJsonBuilder(w)
             builder.call(
                 [
                     {
