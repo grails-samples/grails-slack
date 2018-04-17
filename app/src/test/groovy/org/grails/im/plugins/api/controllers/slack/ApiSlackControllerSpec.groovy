@@ -31,7 +31,7 @@ class ApiSlackControllerSpec extends Specification implements ControllerUnitTest
     void 'the user request is approved'() {
         given: 'valid params request'
         controller.slackToken = 'xxxx'
-        params.payload = '{"token": "xxxx", "actions": [{"name":"Approve", "value":"john.doe@example.com"}], "user":{"name":"Iván"}}'
+        params.payload = '{"token": "xxxx", "actions": [{"name":"Approve", "value":"john.doe@example.com"}], "user":{"name":"Iván"}, "original_message":{"text":"Original user message asking for approval"}}'
 
         and: 'a mock for the collaborator service'
         controller.changeInvitationStatusUseCaseService = Mock(ChangeInvitationStatusUseCaseService)
@@ -43,7 +43,7 @@ class ApiSlackControllerSpec extends Specification implements ControllerUnitTest
         1 * controller.changeInvitationStatusUseCaseService.changeStatus('john.doe@example.com', RequestInviteStatus.APPROVED)
 
         and:
-        response.text == ':white_check_mark: Approve executed by _Iván_ for user john.doe@example.com'
+        response.text == ':white_check_mark: Approve executed by _Iván_:\nOriginal user message asking for approval'
     }
 
     void 'the user request is rejected'() {

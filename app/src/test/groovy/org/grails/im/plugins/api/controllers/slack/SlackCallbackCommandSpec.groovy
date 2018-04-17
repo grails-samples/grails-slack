@@ -13,7 +13,7 @@ class SlackCallbackCommandSpec extends Specification {
 
     void 'valid parameters'() {
         when:
-        cmd.payload = '{"token": "xxxx", "actions": [{"name":"Approve", "value":"john.doe@example.com"}], "user":{"name":"Iván"}}'
+        cmd.payload = '{"token": "xxxx", "actions": [{"name":"Approve", "value":"john.doe@example.com"}], "user":{"name":"Iván"}, "original_message":{"text":"Original user message asking for approval"}}'
 
         then:
         cmd.validate()
@@ -23,6 +23,7 @@ class SlackCallbackCommandSpec extends Specification {
         cmd.fetchAction() == 'Approve'
         cmd.fetchEmail() == 'john.doe@example.com'
         cmd.fetchUser() == 'Iván'
+        cmd.fetchOriginalMessage() == 'Original user message asking for approval'
     }
 
     @Unroll

@@ -26,13 +26,14 @@ class ApiSlackController implements GrailsConfigurationAware {
             return
         }
 
-        String emoji = ':x:'
+        String msg
         if (cmd.fetchAction() == 'Approve') {
             changeInvitationStatusUseCaseService.changeStatus(cmd.fetchEmail(), RequestInviteStatus.APPROVED)
-            emoji = ':white_check_mark:'
+            msg = ":white_check_mark: ${cmd.fetchAction()} executed by _${cmd.fetchUser()}_:\n${cmd.fetchOriginalMessage()}"
+        } else {
+            msg = ":x: ${cmd.fetchAction()} executed by _${cmd.fetchUser()}_ for user ${cmd.fetchEmail()}"
         }
 
-        String msg = "${emoji} ${cmd.fetchAction()} executed by _${cmd.fetchUser()}_ for user ${cmd.fetchEmail()}"
         render msg
     }
 

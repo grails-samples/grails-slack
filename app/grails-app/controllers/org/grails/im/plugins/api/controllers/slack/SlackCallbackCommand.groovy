@@ -28,6 +28,10 @@ class SlackCallbackCommand implements Validateable {
         parseJson()?.user?.name
     }
 
+    String fetchOriginalMessage() {
+        parseJson()?.original_message?.text
+    }
+
     private Map<String, Object> parseJson() {
         if (!parsedJson) {
             parsedJson = new JsonSlurper().parse(payload.bytes) as Map
