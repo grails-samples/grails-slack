@@ -28,10 +28,7 @@ jobs:
         id: gradle_build
         run: |
           ./gradlew build --continue
-          echo "1 ###################"
-          rnd_version=`echo "${RANDOM}-${RANDOM}"`
-          echo ${rnd_version}
-          echo "2 ###################"
+          rnd_version=`echo "${RANDOM}${RANDOM}${RANDOM}"`
           echo "::set-output name=rnd_version::$rnd_version"
 
       - name: Beanstalk deploy
