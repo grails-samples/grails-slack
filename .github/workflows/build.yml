@@ -29,16 +29,16 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build --continue
 
-      - name: Beanstalk deploy
-        uses: einaregilsson/beanstalk-deploy@v10
-        with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: ${{ secrets.APPLICATION_NAME }}
-          environment_name: ${{ secrets.ENVIRONMENT_NAME }}
-          region: ${{ secrets.AWS_REGION }}
-          version_label: ${{ secrets.VERSION_LABEL }}
-          deployment_package: "app/build/libs/app-0.1.war"
+#      - name: Beanstalk deploy
+#        uses: einaregilsson/beanstalk-deploy@v10
+#        with:
+#          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          application_name: ${{ secrets.APPLICATION_NAME }}
+#          environment_name: ${{ secrets.ENVIRONMENT_NAME }}
+#          region: ${{ secrets.AWS_REGION }}
+#          version_label: ${{ secrets.VERSION_LABEL }}
+#          deployment_package: "app/build/libs/app-0.1.war"
 
       - name: Deployed!
         run: echo "Application deployed to ELB"
