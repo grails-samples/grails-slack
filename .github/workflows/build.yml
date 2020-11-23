@@ -25,13 +25,15 @@ jobs:
           java-version: ${{ matrix.java }}
 
       - name: Build with Gradle
-        id: build
+        id: gradle_build
         run: |
           ./gradlew build --continue
           echo "1 ###################"
           rnd_version=`echo "${RANDOM}-${RANDOM}"`
+          echo ${rnd_version}
           echo "2 ###################"
           echo "::set-output name=rnd-version::$rnd_version"
+          echo "3 ###################"
 
       - name: Beanstalk deploy
         uses: einaregilsson/beanstalk-deploy@v10
@@ -41,6 +43,6 @@ jobs:
           application_name: ${{ secrets.APPLICATION_NAME }}
           environment_name: ${{ secrets.ENVIRONMENT_NAME }}
           region: ${{ secrets.AWS_REGION }}
-          version_label: "grails-slack-inviter-${{ steps.build.outputs.rnd_version }}"
+          version_label: "grails-slack-inviter-${{ steps.gradle_build.outputs.rnd_version }}"
           deployment_package: "app/build/libs/app-0.1.war"
 
