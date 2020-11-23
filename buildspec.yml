@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: openjdk8
+  build:
+    commands:
+      - ./gradlew build --scan
+  post_build:
+    finally:
+      - rm -f  /root/.gradle/caches/modules-2/modules-2.lock
+      - rm -fr /root/.gradle/caches/*/plugin-resolution/
+artifacts:
+  files:
+    - '*-all.war'
+  base-directory: 'app/build/libs'
+cache:
+  paths:
+    - '/root/.gradle/caches/**/*' 
+    - '/root/.gradle/wrapper/**/*'
