@@ -28,8 +28,10 @@ jobs:
         id: build
         run: |
           ./gradlew build --continue
+          echo "1 ###################"
           rnd_version=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1`
-          echo "::set-output name=rnd-version::rnd_version"
+          echo "2 ###################"
+          echo "::set-output name=rnd-version::$rnd_version"
 
       - name: Beanstalk deploy
         uses: einaregilsson/beanstalk-deploy@v10
