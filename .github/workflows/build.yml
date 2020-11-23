@@ -32,8 +32,7 @@ jobs:
           rnd_version=`echo "${RANDOM}-${RANDOM}"`
           echo ${rnd_version}
           echo "2 ###################"
-          echo "::set-output name=rnd-version::$rnd_version"
-          echo "3 ###################"
+          echo "::set-output name=rnd_version::$rnd_version"
 
       - name: Beanstalk deploy
         uses: einaregilsson/beanstalk-deploy@v10
