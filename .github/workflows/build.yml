@@ -3,6 +3,7 @@ name: Java CI
 on:
   push:
     branches: [ test2 ]
+  pull_request:
 
 jobs:
   build:
@@ -26,10 +27,13 @@ jobs:
 
       - name: Build with Gradle
         id: gradle_build
+        run: ./gradlew build --continue
+
+      - name: Generates random version label for the deployment
+        id: random_version
         run: |
-          ./gradlew build --continue
-          rnd_version=`echo "${RANDOM}${RANDOM}${RANDOM}"`
-          echo "::set-output name=rnd_version::$rnd_version"
+          version_label=`echo "${RANDOM}${RANDOM}${RANDOM}"`
+          echo "::set-output name=version_label::$version_label"
 
       - name: Beanstalk deploy
         uses: einaregilsson/beanstalk-deploy@v10
@@ -39,6 +43,6 @@ jobs:
           application_name: ${{ secrets.APPLICATION_NAME }}
           environment_name: ${{ secrets.ENVIRONMENT_NAME }}
           region: ${{ secrets.AWS_REGION }}
-          version_label: "grails-slack-inviter-${{ steps.gradle_build.outputs.rnd_version }}"
+          version_label: "grails-slack-inviter-${{ steps.random_version.outputs.version_label }}"
           deployment_package: "app/build/libs/app-0.1.war"
 
