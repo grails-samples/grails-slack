@@ -4,10 +4,16 @@ phases:
   install:
     runtime-versions:
       java: openjdk8
+  pre_build:
+    commands:
+      - echo Nothing to do in the pre_build phase...
   build:
     commands:
+      - echo Build started on `date`
       - ./gradlew build --scan
   post_build:
+    commands:
+      - echo Build completed on `date`
     finally:
       - rm -f  /root/.gradle/caches/modules-2/modules-2.lock
       - rm -fr /root/.gradle/caches/*/plugin-resolution/
