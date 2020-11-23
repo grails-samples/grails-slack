@@ -37,6 +37,7 @@ jobs:
 
       - name: Beanstalk deploy
         uses: einaregilsson/beanstalk-deploy@v10
+        if: github.ref == 'refs/heads/master'
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -45,4 +46,3 @@ jobs:
           region: ${{ secrets.AWS_REGION }}
           version_label: "grails-slack-inviter-${{ steps.random_version.outputs.version_label }}"
           deployment_package: "app/build/libs/app-0.1.war"
-
