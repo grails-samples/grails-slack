@@ -37,7 +37,7 @@ jobs:
           application_name: ${{secrets.APPLICATION_NAME}}
           environment_name: ${{secrets.ENVIRONMENT_NAME}}
           region: ${{secrets.AWS_REGION}}
-          version-label: ${{secrets.VERSION_LABEL}}
+          version_label: ${{secrets.VERSION_LABEL}}
           deployment_package: "app/build/libs/app-0.1.war"
 
       - name: Deployed!
