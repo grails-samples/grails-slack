@@ -9,6 +9,7 @@
     </style>
 </head>
 <body>
+<!-- test 4 -->
 <div id="content" role="main">
 
     <asset:image src="slack.svg" width="200" alt="Slack"/>
