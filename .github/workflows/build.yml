@@ -1,9 +1,11 @@
 name: Java CI
 
-on:
-  push:
-    branches: [ test2 ]
-  pull_request:
+#on:
+#  push:
+#    branches: [ test2 ]
+#  pull_request:
+
+on: [push, pull_request]
 
 jobs:
   build:
