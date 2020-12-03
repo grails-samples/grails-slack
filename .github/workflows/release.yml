@@ -32,7 +32,7 @@ jobs:
         id: deploy_variables
         run: |
           version_label=`date +"%s"`
-          app_version=`cat version.txt`
+          app_version=`grep projectVersion gradle.properties | cut -d \= -f 2`
           echo "::set-output name=version_label::$version_label"
           echo "::set-output name=app_version::$app_version"
 
