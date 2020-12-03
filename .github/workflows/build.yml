@@ -1,12 +1,15 @@
 name: Java CI
 
+#on:
+#  push:
+#    branches:
+#      - master
+#  pull_request:
+#    branches:
+#      - master
 on:
   push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+    branches: [ deploy ]
 
 jobs:
   build:
@@ -43,7 +46,7 @@ jobs:
 
       - name: Beanstalk deploy
         uses: einaregilsson/beanstalk-deploy@v10
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/deploy'
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
