@@ -37,7 +37,7 @@ jobs:
 
       - name: Export deploy variables
         id: deploy_variables
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/deploy'
         run: |
           version_label=`date +"%s"`
           app_version=`grep projectVersion gradle.properties | cut -d \= -f 2`
